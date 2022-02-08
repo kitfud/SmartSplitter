@@ -8,11 +8,12 @@ contract SmartSplitter is PaymentSplitter {
     uint256[] internal payOutRatio;
     address payable public owner;
 
-    constructor(address[] memory _payGroup, uint256[] memory _payOutRatio)
-        payable
-        PaymentSplitter(_payGroup, _payOutRatio)
-    {
-        owner = payable(msg.sender);
+    constructor(
+        address _owner,
+        address[] memory _payGroup,
+        uint256[] memory _payOutRatio
+    ) payable PaymentSplitter(_payGroup, _payOutRatio) {
+        owner = payable(_owner);
         payGroup = _payGroup;
         payOutRatio = _payOutRatio;
     }

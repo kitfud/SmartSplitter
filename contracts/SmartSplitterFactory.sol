@@ -12,6 +12,7 @@ contract SmartSplitterFactory {
         uint256[] memory _payOutRatio
     ) public {
         SmartSplitter smartSplitter = new SmartSplitter(
+            msg.sender,
             _payGroup,
             _payOutRatio
         );
