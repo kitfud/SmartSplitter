@@ -77,7 +77,7 @@ contract SmartSplitterFactory {
 
     function callAdminReleaseAllPayments(uint256 _storageIndex) public {
         SmartSplitter((smartSplitterArray[_storageIndex]))
-            .AdminReleaseAllPayments();
+            .AdminReleaseAllPayments(msg.sender);
     }
 
     function callGetOwner(uint256 _storageIndex) public view returns (address) {
@@ -85,6 +85,15 @@ contract SmartSplitterFactory {
     }
 
     function callReleaseOwedPayment(uint256 _storageIndex) public {
-        SmartSplitter((smartSplitterArray[_storageIndex])).releaseOwedPayment();
+        SmartSplitter((smartSplitterArray[_storageIndex])).releaseOwedPayment(
+            msg.sender
+        );
+    }
+
+    function sendViaCall(address payable _to) public payable {
+        // Call returns a boolean value indicating success or failure.
+        // This is the current recommended method to use.
+        (bool sent, bytes memory data) = _to.call{value: msg.value}("");
+        require(sent, "Failed to send Ether");
     }
 }
